@@ -1,0 +1,9 @@
+{
+	"name": "TestFactory-08",
+	"location": "australiaeast",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "7280d807-5e3c-4e41-b8a6-2d257f2ce0b4",
+		"tenantId": "8014c449-8ca0-4b14-a316-85f6aa59cbec"
+	}
+}
