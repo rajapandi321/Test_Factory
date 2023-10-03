@@ -1,0 +1,11 @@
+{
+	"name": "LS_BBStorage",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobStorage",
+		"typeProperties": {
+			"serviceEndpoint": "https://teststorage08.blob.core.windows.net/",
+			"accountKind": "StorageV2"
+		}
+	}
+}
