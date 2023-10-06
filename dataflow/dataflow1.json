@@ -21,9 +21,9 @@
 			],
 			"sinks": [
 				{
-					"dataset": {
-						"referenceName": "Parquet1",
-						"type": "DatasetReference"
+					"linkedService": {
+						"referenceName": "LS_BlobFlow",
+						"type": "LinkedServiceReference"
 					},
 					"name": "sink1"
 				}
@@ -109,26 +109,8 @@
 				"window1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'parquet',",
-				"     partitionFileNames:['final.parquet'],",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     mapColumn(",
-				"          Date,",
-				"          Symbol = Date,",
-				"          Series,",
-				"          Prev_Close = {Prev Close},",
-				"          Open,",
-				"          High,",
-				"          Low,",
-				"          Last,",
-				"          Close,",
-				"          VWAP,",
-				"          Volume,",
-				"          Turnover,",
-				"          Trades,",
-				"          Deliverable_Volume = {Deliverable Volume},",
-				"          {%Deliverble}",
-				"     ),",
+				"     container: 'output',",
+				"     partitionFileNames:['Verify.parquet'],",
 				"     partitionBy('hash', 1)) ~> sink1"
 			]
 		}
