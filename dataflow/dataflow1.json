@@ -31,6 +31,15 @@
 			"transformations": [
 				{
 					"name": "union1"
+				},
+				{
+					"name": "pivot1"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "cast1"
 				}
 			],
 			"scriptLines": [
@@ -75,7 +84,23 @@
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source2",
 				"source1, source2 union(byName: true)~> union1",
-				"union1 sink(allowSchemaDrift: true,",
+				"cast1 pivot(groupBy(Date),",
+				"     pivotBy(Symbol),",
+				"     {} = sum(Open),",
+				"     columnNaming: '$N$V',",
+				"     lateral: true) ~> pivot1",
+				"union1 select(mapColumn(",
+				"          Date,",
+				"          Symbol,",
+				"          Open",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> select1",
+				"select1 cast(output(",
+				"          Open as double",
+				"     ),",
+				"     errors: true) ~> cast1",
+				"pivot1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'parquet',",
 				"     partitionFileNames:['final.parquet'],",
@@ -83,7 +108,7 @@
 				"     skipDuplicateMapOutputs: true,",
 				"     mapColumn(",
 				"          Date,",
-				"          Symbol,",
+				"          Symbol = Date,",
 				"          Series,",
 				"          Prev_Close = {Prev Close},",
 				"          Open,",
