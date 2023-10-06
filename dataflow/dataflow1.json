@@ -40,6 +40,9 @@
 				},
 				{
 					"name": "cast1"
+				},
+				{
+					"name": "window1"
 				}
 			],
 			"scriptLines": [
@@ -100,7 +103,10 @@
 				"          Open as double",
 				"     ),",
 				"     errors: true) ~> cast1",
-				"pivot1 sink(allowSchemaDrift: true,",
+				"pivot1 window(over(Date),",
+				"     desc(Date, true),",
+				"     Row = rowNumber()) ~> window1",
+				"window1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'parquet',",
 				"     partitionFileNames:['final.parquet'],",
