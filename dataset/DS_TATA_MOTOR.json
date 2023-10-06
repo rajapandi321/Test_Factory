@@ -1,0 +1,84 @@
+{
+	"name": "DS_TATA_MOTOR",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_BlobFlow",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "TATAMOTORS.csv",
+				"container": "data"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "Date",
+				"type": "String"
+			},
+			{
+				"name": "Symbol",
+				"type": "String"
+			},
+			{
+				"name": "Series",
+				"type": "String"
+			},
+			{
+				"name": "Prev Close",
+				"type": "String"
+			},
+			{
+				"name": "Open",
+				"type": "String"
+			},
+			{
+				"name": "High",
+				"type": "String"
+			},
+			{
+				"name": "Low",
+				"type": "String"
+			},
+			{
+				"name": "Last",
+				"type": "String"
+			},
+			{
+				"name": "Close",
+				"type": "String"
+			},
+			{
+				"name": "VWAP",
+				"type": "String"
+			},
+			{
+				"name": "Volume",
+				"type": "String"
+			},
+			{
+				"name": "Turnover",
+				"type": "String"
+			},
+			{
+				"name": "Trades",
+				"type": "String"
+			},
+			{
+				"name": "Deliverable Volume",
+				"type": "String"
+			},
+			{
+				"name": "%Deliverble",
+				"type": "String"
+			}
+		]
+	}
+}

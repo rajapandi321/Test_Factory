@@ -1,0 +1,105 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_TATA_MOTOR",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Tata_Steel",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Parquet1",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "union1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Date as string,",
+				"          Symbol as string,",
+				"          Series as string,",
+				"          {Prev Close} as string,",
+				"          Open as string,",
+				"          High as string,",
+				"          Low as string,",
+				"          Last as string,",
+				"          Close as string,",
+				"          VWAP as string,",
+				"          Volume as string,",
+				"          Turnover as string,",
+				"          Trades as string,",
+				"          {Deliverable Volume} as string,",
+				"          {%Deliverble} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source(output(",
+				"          Date as string,",
+				"          Symbol as string,",
+				"          Series as string,",
+				"          {Prev Close} as string,",
+				"          Open as string,",
+				"          High as string,",
+				"          Low as string,",
+				"          Last as string,",
+				"          Close as string,",
+				"          VWAP as string,",
+				"          Volume as string,",
+				"          Turnover as string,",
+				"          Trades as string,",
+				"          {Deliverable Volume} as string,",
+				"          {%Deliverble} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source2",
+				"source1, source2 union(byName: true)~> union1",
+				"union1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     partitionFileNames:['final.parquet'],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     mapColumn(",
+				"          Date,",
+				"          Symbol,",
+				"          Series,",
+				"          Prev_Close = {Prev Close},",
+				"          Open,",
+				"          High,",
+				"          Low,",
+				"          Last,",
+				"          Close,",
+				"          VWAP,",
+				"          Volume,",
+				"          Turnover,",
+				"          Trades,",
+				"          Deliverable_Volume = {Deliverable Volume},",
+				"          {%Deliverble}",
+				"     ),",
+				"     partitionBy('hash', 1)) ~> sink1"
+			]
+		}
+	}
+}
