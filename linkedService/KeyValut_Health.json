@@ -1,0 +1,11 @@
+{
+	"name": "KeyValut_Health",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://HealthKeys.vault.azure.net/"
+		}
+	}
+}

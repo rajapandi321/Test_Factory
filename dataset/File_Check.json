@@ -1,0 +1,49 @@
+{
+	"name": "File_Check",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Weather.csv",
+				"fileSystem": "geography"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "DateTime",
+				"type": "String"
+			},
+			{
+				"name": "Temperature",
+				"type": "String"
+			},
+			{
+				"name": "Humidity",
+				"type": "String"
+			},
+			{
+				"name": "WindSpeed",
+				"type": "String"
+			},
+			{
+				"name": "Pressure",
+				"type": "String"
+			},
+			{
+				"name": "Summary",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

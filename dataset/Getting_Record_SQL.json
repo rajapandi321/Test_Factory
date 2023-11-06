@@ -1,0 +1,42 @@
+{
+	"name": "Getting_Record_SQL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "DateTime",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Temperature",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Humidity",
+				"type": "nvarchar"
+			},
+			{
+				"name": "WindSpeed",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Pressure",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Summary",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Weather.csv"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,87 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Getting_Record_SQL",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "File_Check",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "File_Check",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "lookup1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          DateTime as string,",
+				"          Temperature as string,",
+				"          Humidity as string,",
+				"          WindSpeed as string,",
+				"          Pressure as string,",
+				"          Summary as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     inferDriftedColumnTypes: true,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
+				"source(output(",
+				"          DateTime as string,",
+				"          Temperature as string,",
+				"          Humidity as string,",
+				"          WindSpeed as string,",
+				"          Pressure as string,",
+				"          Summary as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     inferDriftedColumnTypes: true,",
+				"     ignoreNoFilesFound: false) ~> source2",
+				"source1, source2 lookup(source1@Summary == source2@Summary",
+				"     && source1@DateTime < source2@DateTime,",
+				"     multiple: true,",
+				"     partitionBy('dynamicRange', 4,",
+				"          source2@Summary",
+				"     ),",
+				"     broadcast: 'right')~> lookup1",
+				"lookup1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          DateTime as string,",
+				"          Temperature as string,",
+				"          Humidity as string,",
+				"          WindSpeed as string,",
+				"          Pressure as string,",
+				"          Summary as string",
+				"     ),",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}
